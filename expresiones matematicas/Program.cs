@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 
@@ -9,128 +11,63 @@ namespace expresiones_matematicas
     internal class Program
     {
         static void Main(string[] args)
-        {
 
-            validacion();
+        {
+            expresiones prueba = new expresiones();
+
+
 
 
 
         }
 
 
-         static void validacion()
-        { 
-            string expresion;
-            int parentesis = 0,operando=0,operador=0;
-            string variable="";
-            List<string> operadores = new List<string>() { "+","-","*","^","/" };
-           
-
-
-            Console.WriteLine("Expresion que desea transformar a postfija");
-            expresion = Console.ReadLine();
-
-
-            for (int i = 0; i < expresion.Length; i++)
+            static void menu()
             {
-                if (char.IsNumber(expresion[i]))
+            expresiones prueba = new expresiones();
+            bool salir = false;
+
+                while (!salir)
                 {
-                    Console.WriteLine("Error la expesion contiene numeros no se puede procesar");
-                    Console.ReadKey();
-                    
+                    Console.WriteLine("----- Menú -----");
+                    Console.WriteLine("1. Cambiar a expresión postfija");
+                    Console.WriteLine("2. Mostrar resultado");
+                    Console.WriteLine("3. Salir");
+                    Console.WriteLine("----------------");
+                    Console.Write("Elige una opción: ");
 
-                }
+                    string opcion = Console.ReadLine();
 
-
-                variable = Convert.ToString(expresion[i]);
-
-                if (variable == "(") { parentesis++;continue; }
-
-                if (variable == ")") { parentesis--;continue; }
-
-                if (char.IsLetter(expresion[i])) { operando++;continue; }
-
-                if (operadores.IndexOf(variable) >= 0) { operador++;continue; }
-
-            }
-
-            if (parentesis==0 && operador == operando-1)
-            {
-
-                Console.WriteLine("La expresion esta bien escrita");
-                Console.ReadKey();
-                postfija(expresion);
-            }
-            else
-            {
-                Console.WriteLine("La expresion no es mal escrita");
-                Console.ReadKey();
-            }
-
-          }
-
-        static void postfija(string expresion)
-        {
-            string exprepost = "";
-            string operando1 = "";
-            string operando2 = "";
-            string operador1 = "";
-            string operador2 = "";
-            string salida = "";
-            string expreint = "";
-            List<string> operadores = new List<string>() { "+", "-", "*", "^", "/" };
-
-            pila expresion_pila = new pila();
-
-            for (int i = expresion.Length-1; i >=0; i--)
-            {
-
-                expresion_pila.push(expresion[i]);
-
-
-            }
-
-            while (true)
-            {
-                salida =Convert.ToString( expresion_pila.pop());
-                
-                if (char.IsLetter(char.Parse(salida)))
-                {
-                    operando1 = salida;     
-                    operador1 = Convert.ToString(expresion_pila.pop());
-                    operando2 = Convert.ToString(expresion_pila.pop());
-
-                    if (operadores.IndexOf(operador1) == -1)
+                    switch (opcion)
                     {
-                        Console.WriteLine("La expresion esta mal escrita");
-                        Console.ReadKey();
+                        case "1":
+                        prueba.validacionalfabetica();
+                            
+                            break;
+                        case "2":
+                        prueba.validacionumerica();
+                            
+                            break;
+                        case "3":
+                            Console.WriteLine("Saliendo del programa");
+                            Console.ReadKey();
+                            salir = true;
+                            break;
+                        default:
+                            Console.WriteLine("Opción inválida. Por favor, elige una opción válida.");
+                            break;
                     }
 
-                    expreint =expreint+ operando1 + operando2 + operador1 + operador2;
-
-                    operador2 = "";
-
+                    Console.WriteLine();
                 }
-
-                if (operadores.IndexOf(salida)>=0)
-                {
-                    operador2 = salida;
-                
-                }
-
-
-                if (Convert.ToInt64( expresion_pila.poptope())==-1)
-                {
-                    break;
-                }
-
             }
-
-            Console.WriteLine(expreint);
         }
 
-     }
-}
+
+
+    }
+
+
 
 
 

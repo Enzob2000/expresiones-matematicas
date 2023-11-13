@@ -7,7 +7,7 @@ namespace expresiones_matematicas
     internal class pila
     {
         #region atributos
-        protected const int max = 50;
+        protected const int max = 99;
         object[] elementos;
         int tope;
         #endregion
