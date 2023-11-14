@@ -127,6 +127,7 @@ namespace expresiones_matematicas
             }
             Console.WriteLine();
             Console.WriteLine("La forma postfija es " + exprepost);
+            Console.ReadKey();
 
             return 1;
         }
@@ -141,7 +142,7 @@ namespace expresiones_matematicas
 
 
 
-            Console.WriteLine("Expresion que desea transformar a postfija");
+            Console.WriteLine("Expresion matematica a la cual desea conocer su resultado");
             Console.WriteLine();
             expresion = Console.ReadLine();
 
@@ -180,16 +181,17 @@ namespace expresiones_matematicas
             if (parentesis == 0 && operador == operando - 1)
             {
 
-                resultado(expresion);
+               return resultado(expresion);
             }
             else
             {
                 Console.WriteLine("La expresion esta mal escrita");
                 Console.ReadKey();
+                return 0;
             }
 
         }
-        public void resultado(string expresion)
+        public int resultado(string expresion)
         {
            
             string operando1 = "";
@@ -198,6 +200,7 @@ namespace expresiones_matematicas
             string operador2 = "+";
             string salida = "";
             object resul="0";
+            object aux = "0";
             List<string> operadores = new List<string>() { "+", "-", "*", "^", "/" };
 
             pila expresion_pila = new pila();
@@ -225,9 +228,35 @@ namespace expresiones_matematicas
                     {
                         Console.WriteLine("La expresion esta mal escrita");
                         Console.ReadKey();
+                        return 0;
                     }
 
+                    if (operador1 != "^")
+                    {
 
+                        aux = new DataTable().Compute(operando1 + operador1 + operando2, null);
+
+                    }
+                    else
+                    {
+
+                        double doble=0;
+                        doble = Math.Pow(Convert.ToDouble(operando1), Convert.ToDouble(operando2));
+                        aux = new DataTable().Compute(Convert.ToString(doble), null);
+
+                    }
+                    if (operador2 != "^")
+                    {
+                        resul = new DataTable().Compute(Convert.ToString(resul) + operador2 + Convert.ToString(aux), null);
+
+                    }
+                    else
+                    {
+                        double doble = 0;
+                        doble = Math.Pow(Convert.ToDouble(resul), Convert.ToDouble(aux));
+                        resul = new DataTable().Compute(Convert.ToString(doble), null);
+
+                    }
                 }
 
                 if (operadores.IndexOf(salida) >= 0)
@@ -235,7 +264,8 @@ namespace expresiones_matematicas
                     operador2 = salida;
 
                 }
-
+                
+                
 
                 if (Convert.ToInt64(expresion_pila.poptope()) == -1)
                 {
@@ -243,9 +273,12 @@ namespace expresiones_matematicas
                 }
 
             }
-            resul = new DataTable().Compute(expresion, null);
+            
             Console.WriteLine();
             Console.WriteLine("El resultado es " +Convert.ToString(resul));
+            Console.ReadKey();
+            
+            return 1;
         }
     }
 }

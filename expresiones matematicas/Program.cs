@@ -13,7 +13,7 @@ namespace expresiones_matematicas
         static void Main(string[] args)
 
         {
-            expresiones prueba = new expresiones();
+            menu();
 
 
 
@@ -28,7 +28,9 @@ namespace expresiones_matematicas
             bool salir = false;
 
                 while (!salir)
+
                 {
+                    Console.Clear();
                     Console.WriteLine("----- Menú -----");
                     Console.WriteLine("1. Cambiar a expresión postfija");
                     Console.WriteLine("2. Mostrar resultado");
@@ -41,10 +43,12 @@ namespace expresiones_matematicas
                     switch (opcion)
                     {
                         case "1":
+                        Console.Clear();
                         prueba.validacionalfabetica();
                             
                             break;
                         case "2":
+                        Console.Clear();
                         prueba.validacionumerica();
                             
                             break;
@@ -55,7 +59,9 @@ namespace expresiones_matematicas
                             break;
                         default:
                             Console.WriteLine("Opción inválida. Por favor, elige una opción válida.");
-                            break;
+                            Console.ReadKey();
+                        
+                        break;
                     }
 
                     Console.WriteLine();
